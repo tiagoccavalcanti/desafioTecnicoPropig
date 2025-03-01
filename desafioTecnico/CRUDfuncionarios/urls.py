@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:id>/', views.funcionario_by_id, name='funcionario_by_id'),
     path('login/', views.login, name='token_obtain_pair'),
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('departamento', views.create_departamento, name='create_departamento')
 ]

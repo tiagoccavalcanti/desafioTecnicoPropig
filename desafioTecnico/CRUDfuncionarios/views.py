@@ -153,3 +153,20 @@ def funcionario_by_id(request, id):
 
         funcionario_to_delete.delete()
         return Response(status=status.HTTP_202_ACCEPTED)
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_departamento(request):
+    if not is_superuser(request.user):
+        raise PermissionDenied("Você não tem permissão para criar departamentos.")
+    
+    nome = request.data.get('nome')
+
+    if not nome:
+        return Response({"detail": "O nome do departamento é obrigatório."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if Departamento.objects.filter(nome=nome).exists():
+        return Response({"detail": "Já existe um departamento com este nome."}, status=status.HTTP_400_BAD_REQUEST)
+
+    departamento = Departamento.objects.create(nome=nome)
+    return Response({"id": departamento.id, "nome": departamento.nome}, status=status.HTTP_201_CREATED)
