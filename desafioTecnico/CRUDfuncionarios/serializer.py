@@ -7,7 +7,7 @@ class FuncionarioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Funcionario
-        fields = ['user_id', 'email', 'first_name', 'last_name', 'departamento', 'grupo', 'password']
+        fields = ['id', 'email', 'first_name', 'last_name', 'departamento', 'grupo', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
