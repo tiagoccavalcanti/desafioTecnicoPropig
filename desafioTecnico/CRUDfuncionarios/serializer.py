@@ -7,8 +7,9 @@ class FuncionarioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Funcionario
-        fields = ['id', 'email', 'first_name', 'last_name', 'departamento', 'grupo', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['id','username', 'email', 'first_name', 'last_name', 'departamento', 'grupo', 'password']
+        # extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {'id': {'read_only': True}}
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)

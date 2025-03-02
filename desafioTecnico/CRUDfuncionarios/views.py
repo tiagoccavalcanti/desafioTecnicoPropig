@@ -12,15 +12,15 @@ from .serializer import FuncionarioSerializer
 
 @api_view(['POST'])
 def login(request):
-    email = request.data.get('email')
+    username = request.data.get('username')
     password = request.data.get('password')
 
     try:
-        user = Funcionario.objects.get(email=email)
+        user = Funcionario.objects.get(username=username)
     except Funcionario.DoesNotExist:
-        return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"detail": "user not found"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    if not user.check_password(password):
+    if not user.check_password(password) and user.password != password:
         return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
     refresh = RefreshToken.for_user(user)

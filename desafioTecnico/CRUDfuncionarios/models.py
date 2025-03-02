@@ -13,9 +13,9 @@ class Funcionario(AbstractUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     grupo = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name="funcionarios")
-    username = None
+    username = models.CharField(max_length=255, unique=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'departamento']
     
     groups = models.ManyToManyField(Group, related_name="funcionarios_groups", blank=True)
